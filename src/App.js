@@ -147,7 +147,7 @@ const Portfolio = () => {
       date: "2022-2023",
       description: "Founded climate education nonprofit reaching 6000+ students through curriculum development and school-wide presentations on food waste reduction.",
       achievements: ["6000+ students impacted", "$7k+ in funding", "150% community engagement growth"],
-      link: "https://teamantic01.wixsite.com/team-antic/learn-more"
+      link: "https://storymaps.arcgis.com/stories/228c3ffda80a4a18b4f5140f0480c99c"
     },
     {
       title: "Congressional App Challenge Winner",
