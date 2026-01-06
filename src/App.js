@@ -27,9 +27,9 @@ const Portfolio = () => {
     {
       title: "Ranney Research Reasoning Group",
       org: "UC Berkeley - Professor Michael Ranney",
-      date: "2024-Present",
+      date: "2024",
       icon: <Brain className="w-6 h-6" />,
-      description: "Conducting cognitive science research on reasoning, decision-making, and climate change communication under Professor Michael Ranney.",
+      description: "Conducted cognitive science research on reasoning, decision-making, and climate change communication under Professor Michael Ranney.",
       links: [
         { label: "Research Lab", url: "https://vcresearch.berkeley.edu/faculty/michael-ranney" }
       ],
@@ -437,7 +437,7 @@ const Portfolio = () => {
               My work spans environmental sustainability, healthcare analytics, and public policy. From architecting ETL pipelines processing 10M+ emission records to developing predictive models that reduced patient churn by 18%, I focus on creating scalable, production-ready solutions that address real-world challenges.
             </p>
             <p>
-              As a <span className="text-yellow-400 font-semibold">2025 Bakar Ignite Scholar</span> conducting fiber optics research and a <span className="text-cyan-400 font-semibold">Top 5% YC Applicant</span>, I'm committed to using technology to tackle critical issues in climate, health equity, and data infrastructure.
+              I'm committed to using technology to tackle critical issues in climate, health equity, and data infrastructure.
             </p>
             <p className="text-slate-400 italic">
               Currently seeking opportunities in data visualization engineering and ML infrastructure where I can combine technical excellence with meaningful impact—particularly in roles that emphasize building elegant, performant data products that tell compelling stories.
