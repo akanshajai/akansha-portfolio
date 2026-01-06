@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/akansha-portfolio/static/css/main.0144a6b2.css",
+    "main.js": "/akansha-portfolio/static/js/main.b2b8b153.js",
+    "static/js/453.6cbd3d32.chunk.js": "/akansha-portfolio/static/js/453.6cbd3d32.chunk.js",
+    "index.html": "/akansha-portfolio/index.html",
+    "main.0144a6b2.css.map": "/akansha-portfolio/static/css/main.0144a6b2.css.map",
+    "main.b2b8b153.js.map": "/akansha-portfolio/static/js/main.b2b8b153.js.map",
+    "453.6cbd3d32.chunk.js.map": "/akansha-portfolio/static/js/453.6cbd3d32.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0144a6b2.css",
+    "static/js/main.b2b8b153.js"
+  ]
+}
