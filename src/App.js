@@ -1,39 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, ExternalLink, ChevronDown, Terminal, Database, Brain, TrendingUp, Beaker, BookOpen, Award, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('home');
   const [scrollY, setScrollY] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
+    const handleMouseMove = (e) => setMousePosition({ x: e.clientX, y: e.clientY });
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
+
+  const navCollapsed = scrollY > 100;
 
   const research = [
     {
-      title: "Bakar Ignite Scholar: Fiber Optics DAS Research",
+      title: "Bakar Ignite Scholar",
+      subtitle: "Fiber Optics DAS Research",
       org: "UC Berkeley - Professor Kenichi Soga's Lab",
       date: "2025",
-      icon: <Award className="w-6 h-6" />,
       description: "Awarded competitive research grant to investigate Distributed Acoustic Sensing (DAS) applications using fiber optic technology for infrastructure monitoring and geophysical analysis.",
-      links: [
-        { label: "Bakar Fellows Program", url: "https://bakarfellows.berkeley.edu" }
-      ],
-      color: "from-yellow-500 to-orange-500"
+      links: [{ label: "Bakar Fellows Program", url: "https://bakarfellows.berkeley.edu" }]
     },
     {
       title: "Ranney Research Reasoning Group",
+      subtitle: "Cognitive Science Research",
       org: "UC Berkeley - Professor Michael Ranney",
-      date: "2024",
-      icon: <Brain className="w-6 h-6" />,
-      description: "Conducted cognitive science research on reasoning, decision-making, and climate change communication under Professor Michael Ranney.",
-      links: [
-        { label: "Research Lab", url: "https://vcresearch.berkeley.edu/faculty/michael-ranney" }
-      ],
-      color: "from-purple-500 to-pink-500"
+      date: "2024-Present",
+      description: "Conducting cognitive science research on reasoning, decision-making, and climate change communication under Professor Michael Ranney.",
+      links: [{ label: "Research Lab", url: "https://vcresearch.berkeley.edu/faculty/michael-ranney" }]
     }
   ];
 
@@ -42,12 +45,12 @@ const Portfolio = () => {
       title: "Patient Engagement Analytics Platform",
       role: "Data Analyst Consultant",
       org: "Noora Health",
-      date: "Jan 2025 - Jun 2025",
-      icon: <Brain className="w-6 h-6" />,
+      date: "2025",
+      category: "Healthcare Analytics",
       description: "Built predictive analytics system analyzing 1M+ multilingual patient records across 4 countries and 5 languages to reduce churn and increase engagement.",
       tech: ["BigQuery", "Tableau", "Logistic Regression", "Python", "SQL"],
       metrics: ["1M+ records", "91% accuracy", "18% churn reduction", "12% retention increase"],
-      color: "from-purple-500 to-pink-500",
+      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
       details: {
         challenge: "Healthcare engagement platforms face significant early-stage churn, particularly in multilingual, multi-country contexts. The challenge was identifying behavioral patterns that predict disengagement before it occurs, enabling proactive intervention.",
         approach: [
@@ -57,32 +60,30 @@ const Portfolio = () => {
           "Created Tableau dashboards visualizing engagement trends across 10+ regions and 5 languages",
           "Generated actionable insights that informed targeted intervention strategies"
         ],
-        impact: "The predictive model (91% accuracy, AUC = 0.94) enabled 25% improvement in outreach efficiency, directly contributing to 12% increase in user retention and 18% reduction in early-stage churn. Strategic recommendations were adopted across multiple country operations.",
-        links: [
-          { label: "Final Presentation", url: "https://docs.google.com/presentation/d/1by4HPP9-GHkUIaE-I0YOxMBDn_fWQIdyWubFNeXXUkM/edit" }
-        ]
+        impact: "The predictive model (91% accuracy, AUC = 0.94) enabled 25% improvement in outreach efficiency, directly contributing to 12% increase in user retention and 18% reduction in early-stage churn.",
+        links: []
       }
     },
     {
       title: "California Climate Action Data Infrastructure",
       role: "Data Engineer Intern",
       org: "CoolClimate Network",
-      date: "Jun 2025 - Aug 2025",
-      icon: <TrendingUp className="w-6 h-6" />,
+      date: "2025",
+      category: "Climate Tech",
       description: "Architected scalable ETL pipelines and interactive dashboards analyzing 10M+ emission records to model policy impacts for California municipalities.",
       tech: ["Python", "PostgreSQL", "Supabase", "React", "D3.js", "Recharts", "ETL"],
-      metrics: ["10M+ records", "40% faster processing", "20+ municipalities", "Real-time API"],
-      color: "from-green-500 to-emerald-500",
+      metrics: ["10M+ records", "40% faster processing", "20+ municipalities"],
+      gradient: "from-green-500 via-emerald-500 to-teal-500",
       details: {
-        challenge: "California municipalities needed centralized, analysis-ready emission data from fragmented statewide sources to evaluate policy interventions. The existing infrastructure couldn't handle the volume or provide real-time insights for decision-makers.",
+        challenge: "California municipalities needed centralized, analysis-ready emission data from fragmented statewide sources to evaluate policy interventions.",
         approach: [
-          "Designed and deployed ETL workflows using Python and Supabase (PostgreSQL + real-time APIs) to integrate 10M+ emission records from heterogeneous data sources",
+          "Designed and deployed ETL workflows using Python and Supabase to integrate 10M+ emission records",
           "Optimized SQL pipelines through strategic indexing, partitioning, and Python automation, reducing processing time by 40%",
-          "Prototyped interactive web dashboards using React, Recharts, and D3.js to visualize emission-cost tradeoffs and ROI projections",
-          "Implemented data quality checks and validation layers to ensure consistency across departmental analyses",
-          "Collaborated with policy teams to translate complex datasets into actionable climate policy insights"
+          "Prototyped interactive web dashboards using React, Recharts, and D3.js",
+          "Implemented data quality checks and validation layers",
+          "Collaborated with policy teams to translate complex datasets into actionable insights"
         ],
-        impact: "The infrastructure now powers policy analysis for 20+ California municipalities, enabling real-time modeling of variable emission pricing scenarios and accelerating data-driven climate action decisions.",
+        impact: "The infrastructure now powers policy analysis for 20+ California municipalities, enabling real-time modeling of emission pricing scenarios.",
         links: [
           { label: "Climate Plans Dashboard", url: "https://climateplans.org/transportation" },
           { label: "GitHub Repository", url: "https://github.com/CoolClimateNetwork/climateplans" }
@@ -93,49 +94,45 @@ const Portfolio = () => {
       title: "AI-Powered Water Quality Anomaly Detection",
       role: "AI Research Intern",
       org: "California Water Boards",
-      date: "Aug 2025 - Present",
-      icon: <Database className="w-6 h-6" />,
+      date: "2025",
+      category: "Environmental AI",
       description: "Developing generative AI workflows to detect anomalies in statewide water quality datasets, ensuring regulatory data integrity for environmental decision-making.",
-      tech: ["Python", "Pandas", "Hugging Face", "Random Forest", "Isolation Forest", "Data QA/QC"],
-      metrics: ["40+ analytes", "87% accuracy", "Statewide coverage", "Regulatory impact"],
-      color: "from-blue-500 to-cyan-500",
+      tech: ["Python", "Pandas", "Hugging Face", "Random Forest", "Isolation Forest"],
+      metrics: ["40+ analytes", "87% accuracy", "Statewide coverage"],
+      gradient: "from-teal-500 via-cyan-500 to-blue-500",
       details: {
-        challenge: "California's surface water monitoring data contains inconsistencies including missing values, incorrectly collected measurements, and unit mismatches across 40+ analytes. Traditional threshold-based QA/QC methods fail to distinguish true environmental extremes from human or measurement errors.",
+        challenge: "California's surface water monitoring data contains inconsistencies across 40+ analytes. Traditional QA/QC methods fail to distinguish true environmental extremes from measurement errors.",
         approach: [
-          "Built multivariate anomaly detection system using Random Forest regression with numeric sampling metadata and log-transformed skewed analyte concentrations",
-          "Generated 5-fold out-of-fold predictions to prevent overfitting, iteratively removing anomalies to stabilize baseline trends",
-          "Applied Isolation Forest (5% contamination threshold) over multiple iterations to flag residual-based outliers",
-          "Integrated generative AI fine-tuning using flagged outlier patterns to improve detection of subtle data quality issues",
-          "Developed comprehensive user documentation and presentations to communicate findings to regulatory teams"
+          "Built multivariate anomaly detection system using Random Forest regression",
+          "Generated 5-fold out-of-fold predictions to prevent overfitting",
+          "Applied Isolation Forest (5% contamination threshold) over multiple iterations",
+          "Integrated generative AI fine-tuning using flagged outlier patterns",
+          "Developed comprehensive documentation for regulatory teams"
         ],
-        impact: "The system achieved 87% accuracy in distinguishing measurement errors from genuine environmental anomalies, significantly improving regulatory dataset consistency for environmental decision-making across California's water monitoring network.",
-        links: [
-          { label: "Research Poster", url: "#" }
-        ]
+        impact: "Achieved 87% accuracy in distinguishing measurement errors from genuine environmental anomalies, improving regulatory dataset consistency.",
+        links: []
       }
     },
     {
-      title: "Walkability & Mental Health Research Platform",
+      title: "Walkability & Mental Health Research",
       role: "Technical Product Manager",
       org: "DataGood",
-      date: "Aug 2025 - Present",
-      icon: <MapPin className="w-6 h-6" />,
+      date: "2025",
+      category: "Urban Analytics",
       description: "Leading cross-functional team analyzing relationships between urban walkability metrics and mental health outcomes to generate actionable policy insights.",
-      tech: ["Python", "Scikit-learn", "Geospatial Analysis", "Machine Learning", "Product Management"],
-      metrics: ["3+ policy insights", "25% prediction accuracy improvement", "Cross-functional team"],
-      color: "from-indigo-500 to-purple-500",
+      tech: ["Python", "Scikit-learn", "Geospatial Analysis", "ML"],
+      metrics: ["3+ policy insights", "25% accuracy improvement"],
+      gradient: "from-lime-500 via-green-500 to-emerald-500",
       details: {
-        challenge: "Urban planning decisions impact mental health through walkability, but quantifying these relationships for policy recommendations requires integrating diverse geospatial, health, and demographic datasets.",
+        challenge: "Quantifying walkability-mental health relationships requires integrating diverse geospatial, health, and demographic datasets.",
         approach: [
           "Spearheaded research team combining geospatial analysis with health outcome data",
           "Developed machine learning models improving walkability prediction accuracy by 25%",
           "Coordinated between data scientists, policy researchers, and domain experts",
-          "Generated evidence-based policy recommendations for urban planning initiatives"
+          "Generated evidence-based policy recommendations"
         ],
-        impact: "Research yielded 3+ actionable policy insights connecting walkability infrastructure to mental health outcomes, informing urban planning decisions for improved community wellbeing.",
-        links: [
-          { label: "Project Presentation", url: "https://docs.google.com/presentation/d/1jLlL0jhiegKFr4DcJ6LiogxFYa6DQ6hgrDbnDe0yD5U/edit" }
-        ]
+        impact: "Research yielded 3+ actionable policy insights connecting walkability infrastructure to mental health outcomes.",
+        links: [{ label: "Project Presentation", url: "https://docs.google.com/presentation/d/1jLlL0jhiegKFr4DcJ6LiogxFYa6DQ6hgrDbnDe0yD5U/edit" }]
       }
     }
   ];
@@ -145,15 +142,14 @@ const Portfolio = () => {
       title: "Team ANTIC: Anti-Carbon Nonprofit",
       role: "Founder & Community Coordinator",
       date: "2022-2023",
-      description: "Founded climate education nonprofit reaching 6000+ students through curriculum development and school-wide presentations on food waste reduction.",
-      achievements: ["6000+ students impacted", "$7k+ in funding", "150% community engagement growth"],
-      link: "https://storymaps.arcgis.com/stories/228c3ffda80a4a18b4f5140f0480c99c"
+      description: "Founded climate education nonprofit reaching 6000+ students through curriculum development and presentations.",
+      link: "https://arcg.is/1P4SC90"
     },
     {
       title: "Congressional App Challenge Winner",
       role: "Developer",
       date: "2022",
-      description: "Won Congressional App Challenge (CA-07) for innovative application addressing community needs through technology.",
+      description: "Won Congressional App Challenge (CA-07) for innovative application addressing community needs.",
       link: "https://www.congressionalappchallenge.us/22-CA07/"
     }
   ];
@@ -167,66 +163,63 @@ const Portfolio = () => {
   };
 
   const ProjectModal = ({ project, onClose }) => (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto" onClick={onClose}>
-      <div className="min-h-screen px-4 py-8 flex items-center justify-center">
-        <div className="bg-slate-900 rounded-2xl max-w-4xl w-full p-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-          <div className="flex justify-between items-start mb-6">
-            <div className={`w-14 h-14 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center`}>
-              {project.icon}
-            </div>
-            <button onClick={onClose} className="text-slate-400 hover:text-white text-2xl">×</button>
+    <div className="fixed inset-0 bg-black z-50 overflow-y-auto" onClick={onClose}>
+      <div className="min-h-screen">
+        <button onClick={onClose} className="fixed top-8 right-8 text-white text-5xl hover:rotate-90 transition-transform duration-300 z-10">×</button>
+        <div className="max-w-4xl mx-auto px-8 py-32" onClick={(e) => e.stopPropagation()}>
+          <div className="mb-12">
+            <p className="text-xs uppercase tracking-widest mb-6 text-emerald-400">{project.date} · {project.category}</p>
+            <h2 className="text-6xl md:text-7xl font-serif mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">{project.title}</h2>
+            <p className="text-2xl text-gray-300 mb-3">{project.role}</p>
+            <p className="text-gray-400">{project.org}</p>
           </div>
           
-          <h2 className="text-3xl font-bold mb-2">{project.title}</h2>
-          <p className="text-cyan-400 text-lg mb-1">{project.role}</p>
-          <p className="text-slate-400 mb-6">{project.org} • {project.date}</p>
-          
-          <div className="space-y-6 text-slate-300">
+          <div className="space-y-16 text-gray-300 leading-relaxed">
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Challenge</h3>
-              <p className="leading-relaxed">{project.details.challenge}</p>
+              <h3 className="text-3xl font-serif mb-6 text-white">Challenge</h3>
+              <p className="text-xl">{project.details.challenge}</p>
             </div>
             
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Approach</h3>
-              <ul className="space-y-2">
+              <h3 className="text-3xl font-serif mb-6 text-white">Approach</h3>
+              <ul className="space-y-4">
                 {project.details.approach.map((item, idx) => (
-                  <li key={idx} className="flex gap-3">
-                    <span className="text-cyan-400 mt-1">•</span>
-                    <span className="leading-relaxed">{item}</span>
+                  <li key={idx} className="flex gap-6 text-lg">
+                    <span className="text-emerald-400">—</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Impact</h3>
-              <p className="leading-relaxed">{project.details.impact}</p>
+              <h3 className="text-3xl font-serif mb-6 text-white">Impact</h3>
+              <p className="text-xl">{project.details.impact}</p>
             </div>
             
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Technologies</h3>
-              <div className="flex flex-wrap gap-2">
+              <h3 className="text-3xl font-serif mb-6 text-white">Technologies</h3>
+              <div className="flex flex-wrap gap-3">
                 {project.tech.map(tech => (
-                  <span key={tech} className="px-3 py-1 bg-slate-800 rounded-full text-sm">
+                  <span key={tech} className="px-5 py-2 border border-emerald-500/30 text-sm bg-emerald-500/5 hover:bg-emerald-500/10 transition-colors">
                     {tech}
                   </span>
                 ))}
               </div>
             </div>
             
-            {project.details.links && (
-              <div className="flex flex-wrap gap-3 pt-4">
+            {project.details.links && project.details.links.length > 0 && (
+              <div className="flex flex-wrap gap-6 pt-12 border-t border-gray-800">
                 {project.details.links.map((link, idx) => (
                   <a
                     key={idx}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-lg transition-colors"
+                    className="flex items-center gap-3 text-sm uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-colors group"
                   >
-                    <ExternalLink className="w-4 h-4" />
                     {link.label}
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
                   </a>
                 ))}
               </div>
@@ -238,129 +231,149 @@ const Portfolio = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
+    <div className="min-h-screen bg-black text-white">
+      {/* Custom Cursor */}
+      <div 
+        className="fixed w-5 h-5 border border-white rounded-full pointer-events-none z-50 mix-blend-difference transition-all duration-150"
+        style={{
+          left: `${mousePosition.x}px`,
+          top: `${mousePosition.y}px`,
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
+      
       {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
       
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-40 transition-all duration-300 ${scrollY > 50 ? 'bg-slate-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+      {/* Navigation with Morphing Animation */}
+      <nav className={`fixed top-8 left-1/2 -translate-x-1/2 z-40 transition-all duration-700 ease-in-out ${
+        navCollapsed 
+          ? 'bg-white/10 backdrop-blur-xl rounded-full px-8 py-3' 
+          : 'bg-transparent px-0 py-0'
+      }`}>
+        <div className={`flex items-center transition-all duration-700 ${
+          navCollapsed ? 'gap-8' : 'gap-48'
+        }`}>
+          <div className={`text-xl font-serif transition-all duration-700 ${navCollapsed ? 'opacity-100' : 'opacity-0 absolute'}`}>
             AJ
           </div>
-          <div className="flex gap-6">
-            {['Projects', 'Research', 'Skills', 'About', 'Contact'].map(item => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-cyan-400 transition-colors">
-                {item}
-              </a>
-            ))}
+          <div className={`flex items-center text-xs uppercase tracking-widest transition-all duration-700 ${
+            navCollapsed ? 'gap-6' : 'gap-12'
+          }`}>
+            <a href="#projects" className="hover:text-emerald-400 transition-colors">Projects</a>
+            <a href="#research" className="hover:text-emerald-400 transition-colors">Research</a>
+            <a href="#about" className="hover:text-emerald-400 transition-colors">About</a>
+            <a href="#contact" className="hover:text-emerald-400 transition-colors">Contact</a>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20">
-        <div className="max-w-4xl text-center">
-          <div className="mb-6 inline-block">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 mx-auto mb-6 flex items-center justify-center text-6xl font-bold">
-              AJ
-            </div>
-          </div>
-          <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+      {/* Hero - Centered */}
+      <section className="min-h-screen flex items-center justify-center px-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/20 via-black to-teal-950/20" />
+        <div className="max-w-5xl text-center relative z-10">
+          <h1 className="text-7xl md:text-8xl lg:text-9xl font-serif leading-none mb-8 bg-gradient-to-r from-white via-emerald-200 to-teal-200 bg-clip-text text-transparent">
             Akansha Jain
           </h1>
-          <p className="text-2xl md:text-3xl text-slate-300 mb-4">
+          <p className="text-3xl md:text-4xl text-gray-300 mb-6">
             Data Scientist & Machine Learning Engineer
           </p>
-          <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
-            Building AI-powered solutions for climate, health, and social impact • UC Berkeley Data Science + Cognitive Science
+          <p className="text-xl text-gray-400 mb-16 max-w-3xl mx-auto">
+            Building AI-powered solutions for climate, health, and social impact at UC Berkeley
           </p>
-          <div className="flex gap-4 justify-center mb-12 flex-wrap">
-            <a href="mailto:akanshajain@berkeley.edu" className="flex items-center gap-2 px-6 py-3 bg-cyan-500 hover:bg-cyan-600 rounded-lg transition-colors">
-              <Mail className="w-5 h-5" />
-              Get in Touch
+          <div className="flex gap-8 justify-center text-xs uppercase tracking-widest">
+            <a 
+              href="mailto:akanshajain@berkeley.edu" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
+              Email
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
-            <a href="https://www.linkedin.com/in/-akansha-jain/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
-              <Linkedin className="w-5 h-5" />
+            <a 
+              href="https://www.linkedin.com/in/-akansha-jain/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
               LinkedIn
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
-            <a href="https://github.com/akanshajai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors">
-              <Github className="w-5 h-5" />
+            <a 
+              href="https://github.com/akanshajai" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
               GitHub
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
           </div>
-          <ChevronDown className="w-8 h-8 mx-auto animate-bounce text-slate-500" />
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Featured Projects</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+      {/* Statement */}
+      <section className="py-40 px-8 border-t border-white/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-emerald-950/5 to-black" />
+        <div className="max-w-5xl mx-auto relative z-10">
+          <h2 className="text-5xl md:text-6xl font-serif leading-snug mb-16 bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
+            I build scalable data infrastructure and machine learning systems that drive measurable impact in climate, healthcare, and public policy.
+          </h2>
+          <div className="flex gap-16 text-sm uppercase tracking-widest text-gray-500">
+            <div>
+              <p className="mb-4">Recognition</p>
+              <p className="text-emerald-400 mb-2">2025 Bakar Ignite Scholar</p>
+              <p className="text-emerald-400">Top 5% YC Applicant</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects - Distinct Cards */}
+      <section id="projects" className="py-40 px-8 border-t border-white/10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xs uppercase tracking-widest mb-20 text-gray-500 text-center">Featured Projects</h2>
+          <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project, idx) => (
               <div 
                 key={idx} 
-                className="group bg-slate-800/50 backdrop-blur rounded-xl p-6 hover:bg-slate-800/70 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 cursor-pointer"
+                className="group cursor-pointer bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-500/20"
                 onClick={() => setSelectedProject(project)}
               >
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${project.color} flex items-center justify-center mb-4`}>
-                  {project.icon}
+                <div className="aspect-[4/3] overflow-hidden relative">
+                  <div className={`w-full h-full bg-gradient-to-br ${project.gradient} opacity-30 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700`} />
+                  <div className="absolute inset-0 flex items-center justify-center text-white/40 text-sm uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                    View Project
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                <p className="text-cyan-400 mb-1">{project.role}</p>
-                <p className="text-slate-400 text-sm mb-4">{project.org} • {project.date}</p>
-                <p className="text-slate-300 mb-4">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.slice(0, 4).map(tech => (
-                    <span key={tech} className="px-3 py-1 bg-slate-700 rounded-full text-sm">
-                      {tech}
-                    </span>
-                  ))}
-                  {project.tech.length > 4 && (
-                    <span className="px-3 py-1 bg-slate-700 rounded-full text-sm text-slate-400">
-                      +{project.tech.length - 4} more
-                    </span>
-                  )}
-                </div>
-                <div className="border-t border-slate-700 pt-4 flex items-center justify-between">
-                  <div className="grid grid-cols-2 gap-2 flex-1">
-                    {project.metrics.slice(0, 2).map((metric, i) => (
-                      <div key={i} className="text-center">
-                        <div className="text-cyan-400 font-bold text-sm">{metric.split(' ')[0]}</div>
-                        <div className="text-slate-400 text-xs">{metric.split(' ').slice(1).join(' ')}</div>
-                      </div>
+                <div className="p-8">
+                  <p className="text-xs uppercase tracking-widest mb-4 text-emerald-400">{project.date} · {project.category}</p>
+                  <h3 className="text-3xl font-serif mb-3 group-hover:text-emerald-400 transition-colors duration-300">{project.title}</h3>
+                  <p className="text-gray-400 mb-4">{project.role}</p>
+                  <p className="text-sm text-gray-500 mb-6">{project.org}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.metrics.slice(0, 3).map((metric, i) => (
+                      <span key={i} className="text-xs text-gray-500 border border-white/10 px-3 py-1 rounded-full">{metric}</span>
                     ))}
                   </div>
-                  <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Early Work Section */}
-          <div className="mt-16">
-            <h3 className="text-2xl font-bold mb-6 text-slate-400">Early Work & Recognition</h3>
-            <div className="grid md:grid-cols-2 gap-6">
+          {/* Early Work */}
+          <div className="mt-40 pt-20 border-t border-white/10">
+            <h3 className="text-xs uppercase tracking-widest mb-16 text-gray-500 text-center">Early Work</h3>
+            <div className="grid md:grid-cols-2 gap-8">
               {earlyWork.map((work, idx) => (
                 <a
                   key={idx}
                   href={work.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-slate-800/30 rounded-xl p-6 hover:bg-slate-800/50 transition-all border border-slate-700/50 hover:border-cyan-500/50"
+                  className="group bg-white/5 border border-white/10 rounded-2xl p-8 hover:border-emerald-500/50 transition-all duration-500"
                 >
-                  <h4 className="text-xl font-bold mb-2">{work.title}</h4>
-                  <p className="text-cyan-400 text-sm mb-3">{work.role} • {work.date}</p>
-                  <p className="text-slate-300 mb-4">{work.description}</p>
-                  {work.achievements && (
-                    <div className="flex flex-wrap gap-2">
-                      {work.achievements.map((achievement, i) => (
-                        <span key={i} className="px-2 py-1 bg-slate-700/50 rounded text-xs text-slate-400">
-                          {achievement}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <h4 className="text-2xl font-serif mb-3 group-hover:text-emerald-400 transition-colors duration-300">{work.title}</h4>
+                  <p className="text-sm text-gray-500 mb-4">{work.role} · {work.date}</p>
+                  <p className="text-gray-400">{work.description}</p>
                 </a>
               ))}
             </div>
@@ -368,54 +381,48 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Research Section */}
-      <section id="research" className="py-20 px-6 bg-slate-900/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Research</h2>
-          <div className="grid md:grid-cols-2 gap-6">
+      {/* Research */}
+      <section id="research" className="py-40 px-8 border-t border-white/10 bg-gradient-to-b from-black via-emerald-950/5 to-black">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xs uppercase tracking-widest mb-20 text-gray-500 text-center">Research</h2>
+          <div className="grid md:grid-cols-2 gap-12">
             {research.map((item, idx) => (
-              <div key={idx} className="bg-slate-800/50 backdrop-blur rounded-xl p-6 border border-yellow-500/20">
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${item.color} flex items-center justify-center mb-4`}>
-                  {item.icon}
-                </div>
-                <h3 className="text-2xl font-bold mb-2">{item.title}</h3>
-                <p className="text-yellow-400 mb-1">{item.org}</p>
-                <p className="text-slate-400 text-sm mb-4">{item.date}</p>
-                <p className="text-slate-300 mb-4">{item.description}</p>
-                {item.links && (
-                  <div className="flex flex-wrap gap-2">
-                    {item.links.map((link, i) => (
-                      <a
-                        key={i}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        {link.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
+              <div key={idx} className="group bg-white/5 border border-white/10 rounded-2xl p-10 hover:border-emerald-500/50 transition-all duration-500">
+                <p className="text-xs uppercase tracking-widest mb-6 text-emerald-400">{item.date}</p>
+                <h3 className="text-3xl font-serif mb-3 group-hover:text-emerald-400 transition-colors duration-300">{item.title}</h3>
+                <p className="text-xl mb-6 text-gray-400">{item.subtitle}</p>
+                <p className="text-gray-500 mb-6">{item.org}</p>
+                <p className="text-gray-300 leading-relaxed mb-8">{item.description}</p>
+                {item.links && item.links.map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 text-xs uppercase tracking-widest text-emerald-400 hover:text-emerald-300 transition-colors group"
+                  >
+                    {link.label}
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                  </a>
+                ))}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Technical Skills</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {Object.entries(skills).map(([category, items]) => (
-              <div key={category} className="bg-slate-800/50 backdrop-blur rounded-xl p-6">
-                <h3 className="text-xl font-bold mb-4 text-cyan-400">{category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {items.map(skill => (
-                    <span key={skill} className="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded-full text-sm transition-colors">
-                      {skill}
+      {/* Skills - Centered & Horizontal */}
+      <section className="py-40 px-8 border-t border-white/10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xs uppercase tracking-widest mb-20 text-gray-500 text-center">Skills</h2>
+          <div className="space-y-16">
+            {Object.entries(skills).map(([category, items], idx) => (
+              <div key={idx} className="text-center">
+                <h3 className="text-2xl font-serif mb-8 text-emerald-400">{category}</h3>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {items.map(item => (
+                    <span key={item} className="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-sm hover:border-emerald-500/50 hover:bg-white/10 transition-all duration-300">
+                      {item}
                     </span>
                   ))}
                 </div>
@@ -425,11 +432,11 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-6 bg-slate-900/50">
+      {/* About */}
+      <section id="about" className="py-40 px-8 border-t border-white/10 bg-gradient-to-b from-black via-emerald-950/5 to-black">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-center">About Me</h2>
-          <div className="bg-slate-800/50 backdrop-blur rounded-xl p-8 space-y-4 text-slate-300 leading-relaxed">
+          <h2 className="text-xs uppercase tracking-widest mb-16 text-gray-500 text-center">About</h2>
+          <div className="space-y-8 text-xl leading-relaxed text-gray-300">
             <p>
               I'm a data scientist and machine learning engineer studying Data Science and Cognitive Science at UC Berkeley, passionate about leveraging AI to drive measurable social impact.
             </p>
@@ -439,41 +446,54 @@ const Portfolio = () => {
             <p>
               I'm committed to using technology to tackle critical issues in climate, health equity, and data infrastructure.
             </p>
-            <p className="text-slate-400 italic">
-              Currently seeking opportunities in data visualization engineering and ML infrastructure where I can combine technical excellence with meaningful impact—particularly in roles that emphasize building elegant, performant data products that tell compelling stories.
+            <p className="text-gray-500 italic">
+              Currently seeking opportunities in data visualization engineering and ML infrastructure where I can combine technical excellence with meaningful impact.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8">Let's Connect</h2>
-          <p className="text-xl text-slate-300 mb-8">
-            Interested in collaborating or learning more about my work?
-          </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <a href="mailto:akanshajain@berkeley.edu" className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg transition-all text-lg font-semibold">
-              <Mail className="w-5 h-5" />
-              akanshajain@berkeley.edu
+      {/* Contact */}
+      <section id="contact" className="py-40 px-8 border-t border-white/10">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-6xl md:text-7xl font-serif mb-16 bg-gradient-to-r from-white via-emerald-200 to-white bg-clip-text text-transparent">
+            Let's work together
+          </h2>
+          <div className="flex gap-12 justify-center text-xs uppercase tracking-widest">
+            <a 
+              href="mailto:akanshajain@berkeley.edu" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
+              Email
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
-            <a href="https://www.linkedin.com/in/-akansha-jain/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-lg">
-              <Linkedin className="w-5 h-5" />
+            <a 
+              href="https://www.linkedin.com/in/-akansha-jain/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
               LinkedIn
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
-            <a href="https://github.com/akanshajai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-8 py-4 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors text-lg">
-              <Github className="w-5 h-5" />
+            <a 
+              href="https://github.com/akanshajai" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group flex items-center gap-2 hover:text-emerald-400 transition-colors"
+            >
               GitHub
+              <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
             </a>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-slate-800">
-        <div className="max-w-6xl mx-auto text-center text-slate-400">
-          <p>© 2025 Akansha Jain • Built with React • Deployed on GitHub Pages</p>
+      <footer className="py-16 px-8 border-t border-white/10">
+        <div className="max-w-7xl mx-auto flex justify-between items-center text-sm text-gray-600">
+          <p>© 2025 Akansha Jain</p>
+          <p>Built with React</p>
         </div>
       </footer>
     </div>
